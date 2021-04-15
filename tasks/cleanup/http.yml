@@ -1,0 +1,51 @@
+# Standards: 1.2
+---
+- name: "Remove http challenge : {{ certificate.name }}"
+  loop: "{{ letsencrypt_initial_request.challenge_data | default({}) | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  when:
+    - letsencrypt_initial_request is changed
+    - letsencrypt_initial_request.challenge_data | length > 0
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+  file:
+    path: "/var/www/html/{{ item.value['http-01']['resource'] }}"
+    state: absent
+  tags:
+    - letsencrypt
+
+- name: "Remove distributed challenge : {{ certificate.name }}"
+  loop: "{{ letsencrypt_initial_request.challenge_data | default({}) | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname != letsencrypt_cluster_nodes[0]
+  file:
+    path: "/var/www/html/{{ item.value['http-01']['resource'] }}"
+    state: absent
+  tags:
+    - letsencrypt
+
+- name: "Remove local archive : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname == letsencrypt_cluster_nodes[0]
+  connection: local
+  file:
+    path: /tmp/responses.tbz
+    state: absent
+  tags:
+    - letsencrypt
+
+- name: "Remove challenge archive : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname == letsencrypt_cluster_nodes[0]
+  file:
+    path: /tmp/responses.tbz
+    state: absent
+  tags:
+    - letsencrypt
+
+...

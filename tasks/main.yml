@@ -1,0 +1,116 @@
+# Standards: 1.2
+---
+- name: Write extra certs
+  loop: "{{ letsencrypt_extra_certs | product(letsencrypt_cert_paths) | list }}"
+  loop_control:
+    label: "{{ item.0.name | default(item.0) }}"
+  when: letsencrypt_certificates | length > 0 and item.0.state | default('present') == 'present'
+  copy:
+    src: "{{ item.0.src | default(item.0.name) | default(item.0) }}"
+    dest: "{{ item.1.path | default(item.1) }}/{{ item.0.dest | default(item.0.name) | default(item.0) }}"
+    owner: "{{ item.1.owner | default(item.0.owner) | default('root') }}"
+    group: "{{ item.1.group | default(item.0.group) | default('root') }}"
+    mode: "{{ item.1.mode | default(item.0.mode) | default('u=rw,g=,o=') }}"
+  tags:
+    - letsencrypt
+
+- name: Drop extra certs
+  loop: "{{ letsencrypt_extra_certs | product(letsencrypt_cert_paths) | list }}"
+  loop_control:
+    label: "{{ item.0.name | default(item.0) }}"
+  when: letsencrypt_certificates | length > 0 and item.0.state | default('present') == 'absent'
+  file:
+    path: "{{ item.1.path | default(item.1) }}/{{ item.0.dest | default(item.0.name) | default(item.0) }}"
+    state: absent
+  tags:
+    - letsencrypt
+
+- name: Create letsencrypt directories
+  loop:
+    - confs
+    - csrs
+    - keys
+    - certs
+    - chains
+  when: letsencrypt_certificates | length > 0
+  file:
+    path: "/etc/letsencrypt/{{ item }}"
+    owner: root
+    group: root
+    mode: u=rwx,g=x,o=x
+    state: directory
+  tags:
+    - letsencrypt
+
+- name: Copy letsencrypt account
+  when: letsencrypt_certificates | length > 0
+  changed_when: False
+  no_log: True
+  copy:
+    src: "{{ letsencrypt_account_key | default('account.key') }}"
+    dest: /etc/letsencrypt/account.key
+  tags:
+    - letsencrypt
+
+- name: Create challenge directory
+  when: letsencrypt_certificates | length > 0
+  file:
+    path: /var/www/html/.well-known/acme-challenge
+    group: root
+    state: directory
+    mode: u=rwx,g=rx,o=rx
+    owner: root
+  tags:
+    - letsencrypt
+
+- name: Create X509 key
+  loop: "{{ letsencrypt_certificates }}"
+  loop_control:
+    loop_var: certificate
+    label: "{{ certificate.name }}"
+  when:
+    - letsencrypt_certificates | length > 0
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+  include_tasks: prepare.yml
+  tags:
+    - letsencrypt
+
+- name: Request letsencrypt certs
+  loop: "{{ letsencrypt_certificates }}"
+  loop_control:
+    loop_var: certificate
+    label: "{{ certificate.name }}"
+  when: letsencrypt_certificates | length > 0
+  include_tasks: request.yml
+  tags:
+    - letsencrypt
+
+- name: Remove letsencrypt account
+  when: letsencrypt_certificates | length > 0
+  changed_when: False
+  no_log: True
+  file:
+    path: /etc/letsencrypt/account.key
+    state: absent
+  tags:
+    - letsencrypt
+
+- name: Reload affected services
+  loop: "{{ letsencrypt_reload_services }}"
+  when: letsencrypt_certificates | length > 0
+  service:
+    name: "{{ item }}"
+    state: reloaded
+  tags:
+    - letsencrypt
+
+- name: Restart affected services
+  loop: "{{ letsencrypt_restart_services }}"
+  when: letsencrypt_certificates | length > 0
+  service:
+    name: "{{ item }}"
+    state: restarted
+  tags:
+    - letsencrypt
+
+...

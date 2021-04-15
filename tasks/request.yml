@@ -1,0 +1,128 @@
+# Standards: 1.2
+---
+- name: "Define acme directory : {{ certificate.name }}"
+  set_fact:
+    letsencrypt_acme_directory: "{{ 'https://acme-v02.api.letsencrypt.org/directory' if letsencrypt_production_armed else 'https://acme-staging-v02.api.letsencrypt.org/directory' }}"
+  tags:
+    - letsencrypt
+
+- name: "Initial issue request : {{ certificate.name }}"
+  register: letsencrypt_initial_request
+  when:
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+  acme_certificate:
+    dest: "/etc/letsencrypt/certs/{{ certificate.name }}.crt"
+    fullchain: "/etc/letsencrypt/certs/{{ certificate.name }}.pem"
+    chain: /etc/letsencrypt/certs/chain.crt
+    csr: "/etc/letsencrypt/csrs/{{ certificate.name }}.csr"
+    account_key: /etc/letsencrypt/account.key
+    account_email: "{{ letsencrypt_account_email }}"
+    challenge: "{{ letsencrypt_challenge_mapping[certificate.challenge] | default('http-01') }}"
+    acme_directory: "{{ letsencrypt_acme_directory }}"
+    agreement: https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf
+    remaining_days: 30
+    acme_version: 2
+  tags:
+    - letsencrypt
+
+- name: "Print initial response : {{ certificate.name }}"
+  when:
+    - letsencrypt_request_output
+    - letsencrypt_initial_request is defined
+  debug:
+    var: letsencrypt_initial_request
+  tags:
+    - letsencrypt
+
+- name: "Handle challenge method : {{ certificate.name }}"
+  include_tasks: "request/{{ item.challenge | default('http') }}.yml"
+  tags:
+    - letsencrypt
+
+- name: "Final issue request : {{ certificate.name }}"
+  register: letsencrypt_final_request
+  when:
+    - letsencrypt_initial_request is changed
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+  acme_certificate:
+    dest: "/etc/letsencrypt/certs/{{ certificate.name }}.crt"
+    fullchain: "/etc/letsencrypt/certs/{{ certificate.name }}.pem"
+    chain: /etc/letsencrypt/certs/chain.crt
+    csr: "/etc/letsencrypt/csrs/{{ certificate.name }}.csr"
+    account_key: /etc/letsencrypt/account.key
+    account_email: "{{ letsencrypt_account_email }}"
+    challenge: "{{ letsencrypt_challenge_mapping[certificate.challenge] | default('http-01') }}"
+    acme_directory: "{{ letsencrypt_acme_directory }}"
+    agreement: https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf
+    remaining_days: 30
+    acme_version: 2
+    data: "{{ letsencrypt_initial_request }}"
+  tags:
+    - letsencrypt
+
+- name: "Print final response : {{ certificate.name }}"
+  when:
+    - letsencrypt_request_output
+    - letsencrypt_final_request is defined
+  debug:
+    var: letsencrypt_final_request
+  tags:
+    - letsencrypt
+
+- name: "Cleanup challenge method : {{ certificate.name }}"
+  include_tasks: "cleanup/{{ item.challenge | default('http') }}.yml"
+  tags:
+    - letsencrypt
+
+- name: "Create chained cert : {{ certificate.name }}"
+  when:
+    - letsencrypt_final_request is success
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+  shell: "cat certs/{{ certificate.name }}.pem keys/{{ certificate.name }}.key > chains/{{ certificate.name }}.pem"
+  args:
+    chdir: /etc/letsencrypt
+  tags:
+    - letsencrypt
+
+- name: "Copy chained cert : {{ certificate.name }}"
+  when:
+    - letsencrypt_final_request is success
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+  loop: "{{ letsencrypt_cert_paths }}"
+  copy:
+    dest: "{{ item }}/{{ certificate.name }}.pem"
+    src: "/etc/letsencrypt/chains/{{ certificate.name }}.pem"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    remote_src: True
+  tags:
+    - letsencrypt
+
+- name: "Fetch chained cert : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname == letsencrypt_cluster_nodes[0]
+  fetch:
+    dest: "/tmp/{{ certificate.name }}.crt"
+    src: "/etc/letsencrypt/chains/{{ certificate.name }}.pem"
+    flat: True
+  tags:
+    - letsencrypt
+
+- name: "Distribute chained cert : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname != letsencrypt_cluster_nodes[0]
+  loop: "{{ letsencrypt_cert_paths }}"
+  copy:
+    src: "/tmp/{{ certificate.name }}.crt"
+    dest: "{{ item }}/{{ certificate.name }}.pem"
+    group: root
+    owner: root
+    mode: u=rw,g=r,o=r
+    remote_src: False
+  tags:
+    - letsencrypt
+
+...

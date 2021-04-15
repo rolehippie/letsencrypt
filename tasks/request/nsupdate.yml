@@ -1,0 +1,26 @@
+# Standards: 1.2
+---
+- name: "Create DNS record : {{ certificate.name }}"
+  register: letsencrypt_nsupdate_records
+  loop: "{{ letsencrypt_initial_request.challenge_data_dns | default({}) | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  when:
+    - letsencrypt_initial_request is changed
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+    - letsencrypt_initial_request.challenge_data_dns | length > 0
+  nsupdate:
+    key_algorithm: "{{ certificate.nsupdate.algorithm | default(letsencrypt_nsupdate_algorithm) }}"
+    key_name: "{{ certificate.nsupdate.name | default(letsencrypt_nsupdate_name) }}"
+    key_secret: "{{ certificate.nsupdate.secret | default(letsencrypt_nsupdate_secret) }}"
+    server: "{{ certificate.nsupdate.server | default(letsencrypt_nsupdate_server) }}"
+    zone: "{{ certificate.zone }}"
+    type: TXT
+    record: "{{ item.key }}."
+    value: "{{ item.value }}"
+    ttl: "300"
+    state: present
+  tags:
+    - letsencrypt
+
+...

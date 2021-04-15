@@ -1,0 +1,59 @@
+# Standards: 1.2
+---
+- name: "Create http challenge : {{ certificate.name }}"
+  loop: "{{ letsencrypt_initial_request.challenge_data | default({}) | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  when:
+    - letsencrypt_initial_request is changed
+    - letsencrypt_initial_request.challenge_data | length > 0
+    - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
+  copy:
+    content: "{{ item.value['http-01']['resource_value'] }}"
+    dest: "/var/www/html/{{ item.value['http-01']['resource'] }}"
+    force: True
+  tags:
+    - letsencrypt
+
+- name: "Archive challenge response : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname == letsencrypt_cluster_nodes[0]
+  archive:
+    path: /var/www/html/
+    dest: /tmp/responses.tbz
+  tags:
+    - letsencrypt
+
+- name: "Fetch challenge archive : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname == letsencrypt_cluster_nodes[0]
+  fetch:
+    src: /tmp/responses.tbz
+    dest: /tmp/responses.tbz
+    flat: True
+  tags:
+    - letsencrypt
+
+- name: "Distribute challenge archive : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname != letsencrypt_cluster_nodes[0]
+  copy:
+    src: /tmp/responses.tbz
+    dest: /tmp/responses.tbz
+  tags:
+    - letsencrypt
+
+- name: "Unpack challenge archive : {{ certificate.name }}"
+  when:
+    - letsencrypt_cluster_enabled | bool
+    - inventory_hostname != letsencrypt_cluster_nodes[0]
+  unarchive:
+    src: /tmp/responses.tbz
+    dest: /var/www/html/
+  tags:
+    - letsencrypt
+
+...

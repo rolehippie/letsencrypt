@@ -1,0 +1,112 @@
+# Standards: 1.2
+---
+# @var letsencrypt_cluster_enabled:description: Enable clustered mode
+letsencrypt_cluster_enabled: False
+
+# @var letsencrypt_cluster_nodes:description: List of nodes part of the cluster
+# @var letsencrypt_cluster_nodes:example: >
+# letsencrypt_cluster_nodes:
+#   - node01
+#   - node02
+#   - node03
+# @end
+letsencrypt_cluster_nodes: []
+
+# @var letsencrypt_production_armed:description: Enable production authority
+letsencrypt_production_armed: False
+
+# @var letsencrypt_request_output:description: Print cert information after request
+letsencrypt_request_output: True
+
+# @var letsencrypt_cert_paths:description: Paths to store the certificates
+# @var letsencrypt_cert_paths:example: >
+# letsencrypt_cert_paths:
+#   - /etc/haproxy/ssl
+#   - path: /etc/caddy
+#     owner: caddy
+#     group: caddy
+#     mode: u=rwx,g=x,o=x
+# @end
+letsencrypt_cert_paths:
+  - /etc/ssl/letsencrypt
+
+# @var letsencrypt_extra_certs:description: Additional certificates to add
+# @var letsencrypt_extra_certs:example: >
+# letsencrypt_extra_certs:
+#   - foobar.pem
+#   - name: general.pem
+#     owner: root
+#     group: haproxy
+#     mode: u=rwx,g=x,o=x
+# @end
+letsencrypt_extra_certs: []
+
+# @var letsencrypt_reload_services:description: List of services to reload
+# @var letsencrypt_reload_services:example: >
+# letsencrypt_reload_services:
+#   - haproxy
+#   - apache
+# @end
+letsencrypt_reload_services: []
+
+# @var letsencrypt_restart_services:description: List of services to restart
+# @var letsencrypt_restart_services:example: >
+# letsencrypt_restart_services:
+#   - traefik
+# @end
+letsencrypt_restart_services: []
+
+# @var letsencrypt_account_key:description: Path to Let's Encrypt account key
+letsencrypt_account_key: account.key
+
+# @var letsencrypt_account_email:description: Email address used for Let's Encrypt
+letsencrypt_account_email: hostmaster@localhost
+
+# @var letsencrypt_nsupdate_algorithm:description: TSIG algorithm for nsupdate DNS challenges
+letsencrypt_nsupdate_algorithm: hmac-sha512
+
+# @var letsencrypt_nsupdate_name:description: TSIG name for nsupdate DNS challenges
+letsencrypt_nsupdate_name:
+
+# @var letsencrypt_nsupdate_secret:description: TSIG secret for nsupdate DNS challenges
+letsencrypt_nsupdate_secret:
+
+# @var letsencrypt_nsupdate_server:description: Server used for nsupdate DNS challenges
+letsencrypt_nsupdate_server:
+
+# @var letsencrypt_challenge_mapping:description: Mapping of challenge types
+letsencrypt_challenge_mapping:
+  http: http-01
+  nsupdate: dns-01
+
+# @var letsencrypt_cert_organization:description: Organization used for the SSL configuration
+letsencrypt_cert_organization: DevOps Team
+
+# @var letsencrypt_cert_country:description: Country used for the SSL configuration
+letsencrypt_cert_country: DE
+
+# @var letsencrypt_cert_province:description: Province used for the SSL configuration
+letsencrypt_cert_province: Bavaria
+
+# @var letsencrypt_cert_city:description: City used for the SSL configuration
+letsencrypt_cert_city: Nuremberg
+
+# @var letsencrypt_certificates:description: List of certificate definitions
+# @var letsencrypt_certificates:example: >
+# letsencrypt_certificates:
+#   - name: foobar
+#     challenge: nsupdate
+#     common_name: foobar.com
+#     alternate_names:
+#       - '*.foobar.com'
+#   - name: example
+#     challenge: http
+#     common_name: example.com
+#     alternate_names:
+#       - sub1.example.com
+#       - sub2.example.com
+#       - sub3.example.com
+# @end
+letsencrypt_certificates: []
+
+...
