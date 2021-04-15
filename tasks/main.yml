@@ -1,5 +1,14 @@
 # Standards: 1.2
 ---
+- name: Install required packages
+  loop:
+    - python3-dnspython
+  package:
+    name: "{{ item }}"
+    state: present
+  tags:
+    - letsencrypt
+
 - name: Write extra certs
   loop: "{{ letsencrypt_extra_certs | product(letsencrypt_cert_paths) | list }}"
   loop_control:

@@ -1,12 +1,5 @@
 # Standards: 1.2
 ---
-- name: "Install dns module : {{ certificate.name }}"
-  package:
-    name: python3-dnspython
-    state: present
-  tags:
-    - letsencrypt
-
 - name: "Write SSL config : {{ certificate.name }}"
   register: letsencrypt_ssl_config
   template:
