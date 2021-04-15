@@ -35,7 +35,7 @@
     - letsencrypt
 
 - name: "Handle challenge method : {{ certificate.name }}"
-  include_tasks: "request/{{ item.challenge | default('http') }}.yml"
+  include_tasks: "request/{{ certificate.challenge | default('http') }}.yml"
   tags:
     - letsencrypt
 
@@ -70,7 +70,7 @@
     - letsencrypt
 
 - name: "Cleanup challenge method : {{ certificate.name }}"
-  include_tasks: "cleanup/{{ item.challenge | default('http') }}.yml"
+  include_tasks: "cleanup/{{ certificate.challenge | default('http') }}.yml"
   tags:
     - letsencrypt
 
