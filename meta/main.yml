@@ -20,6 +20,8 @@
 # None
 # @end
 galaxy_info:
+  role_name: letsencrypt
+  namespace: rolehippie
   author: Thomas Boerger
   description: Ansible role to fetch and publish Let's Encrypt certificates
   license: Apache-2.0
