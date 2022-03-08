@@ -5,6 +5,9 @@
   template:
     src: openssl.cnf.j2
     dest: "/etc/letsencrypt/confs/{{ certificate.name }}.cnf"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - letsencrypt
 

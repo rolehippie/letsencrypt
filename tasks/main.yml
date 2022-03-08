@@ -58,6 +58,9 @@
   copy:
     src: "{{ letsencrypt_account_key | default('account.key') }}"
     dest: /etc/letsencrypt/account.key
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
   tags:
     - letsencrypt
 
