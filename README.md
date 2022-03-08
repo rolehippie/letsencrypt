@@ -1,41 +1,42 @@
 # letsencrypt
 
-[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/letsencrypt) [![Testing Build](https://github.com/rolehippie/letsencrypt/workflows/testing/badge.svg)](https://github.com/rolehippie/letsencrypt/actions?query=workflow%3Atesting) [![Readme Build](https://github.com/rolehippie/letsencrypt/workflows/readme/badge.svg)](https://github.com/rolehippie/letsencrypt/actions?query=workflow%3Areadme) [![Galaxy Build](https://github.com/rolehippie/letsencrypt/workflows/galaxy/badge.svg)](https://github.com/rolehippie/letsencrypt/actions?query=workflow%3Agalaxy) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/letsencrypt)](https://github.com/rolehippie/letsencrypt/blob/master/LICENSE) 
+[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/letsencrypt) [![Testing Build](https://github.com/rolehippie/letsencrypt/workflows/testing/badge.svg)](https://github.com/rolehippie/letsencrypt/actions?query=workflow%3Atesting) [![Readme Build](https://github.com/rolehippie/letsencrypt/workflows/readme/badge.svg)](https://github.com/rolehippie/letsencrypt/actions?query=workflow%3Areadme) [![Galaxy Build](https://github.com/rolehippie/letsencrypt/workflows/galaxy/badge.svg)](https://github.com/rolehippie/letsencrypt/actions?query=workflow%3Agalaxy) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/letsencrypt)](https://github.com/rolehippie/letsencrypt/blob/master/LICENSE)
 
-Ansible role to fetch and publish Let's Encrypt certificates. 
+Ansible role to fetch and publish Let's Encrypt certificates.
 
-## Sponsor 
+## Sponsor
 
-[![Proact Deutschland GmbH](https://proact.eu/wp-content/uploads/2020/03/proact-logo.png)](https://proact.eu) 
+[![Proact Deutschland GmbH](https://proact.eu/wp-content/uploads/2020/03/proact-logo.png)](https://proact.eu)
 
 Building and improving this Ansible role have been sponsored by my employer **Proact Deutschland GmbH**.
 
 ## Table of content
 
-* [Default Variables](#default-variables)
-  * [letsencrypt_account_email](#letsencrypt_account_email)
-  * [letsencrypt_account_key](#letsencrypt_account_key)
-  * [letsencrypt_cert_city](#letsencrypt_cert_city)
-  * [letsencrypt_cert_country](#letsencrypt_cert_country)
-  * [letsencrypt_cert_organization](#letsencrypt_cert_organization)
-  * [letsencrypt_cert_paths](#letsencrypt_cert_paths)
-  * [letsencrypt_cert_province](#letsencrypt_cert_province)
-  * [letsencrypt_certificates](#letsencrypt_certificates)
-  * [letsencrypt_challenge_mapping](#letsencrypt_challenge_mapping)
-  * [letsencrypt_cluster_enabled](#letsencrypt_cluster_enabled)
-  * [letsencrypt_cluster_nodes](#letsencrypt_cluster_nodes)
-  * [letsencrypt_extra_certs](#letsencrypt_extra_certs)
-  * [letsencrypt_nsupdate_algorithm](#letsencrypt_nsupdate_algorithm)
-  * [letsencrypt_nsupdate_name](#letsencrypt_nsupdate_name)
-  * [letsencrypt_nsupdate_secret](#letsencrypt_nsupdate_secret)
-  * [letsencrypt_nsupdate_server](#letsencrypt_nsupdate_server)
-  * [letsencrypt_production_armed](#letsencrypt_production_armed)
-  * [letsencrypt_reload_services](#letsencrypt_reload_services)
-  * [letsencrypt_request_output](#letsencrypt_request_output)
-  * [letsencrypt_restart_services](#letsencrypt_restart_services)
-* [Dependencies](#dependencies)
-* [License](#license)
-* [Author](#author)
+- [Default Variables](#default-variables)
+  - [letsencrypt_account_email](#letsencrypt_account_email)
+  - [letsencrypt_account_key](#letsencrypt_account_key)
+  - [letsencrypt_cert_city](#letsencrypt_cert_city)
+  - [letsencrypt_cert_country](#letsencrypt_cert_country)
+  - [letsencrypt_cert_organization](#letsencrypt_cert_organization)
+  - [letsencrypt_cert_paths](#letsencrypt_cert_paths)
+  - [letsencrypt_cert_province](#letsencrypt_cert_province)
+  - [letsencrypt_certificates](#letsencrypt_certificates)
+  - [letsencrypt_challenge_mapping](#letsencrypt_challenge_mapping)
+  - [letsencrypt_cluster_enabled](#letsencrypt_cluster_enabled)
+  - [letsencrypt_cluster_nodes](#letsencrypt_cluster_nodes)
+  - [letsencrypt_extra_certs](#letsencrypt_extra_certs)
+  - [letsencrypt_nsupdate_algorithm](#letsencrypt_nsupdate_algorithm)
+  - [letsencrypt_nsupdate_name](#letsencrypt_nsupdate_name)
+  - [letsencrypt_nsupdate_secret](#letsencrypt_nsupdate_secret)
+  - [letsencrypt_nsupdate_server](#letsencrypt_nsupdate_server)
+  - [letsencrypt_production_armed](#letsencrypt_production_armed)
+  - [letsencrypt_reload_services](#letsencrypt_reload_services)
+  - [letsencrypt_request_output](#letsencrypt_request_output)
+  - [letsencrypt_restart_services](#letsencrypt_restart_services)
+- [Discovered Tags](#discovered-tags)
+- [Dependencies](#dependencies)
+- [License](#license)
+- [Author](#author)
 
 ---
 
@@ -308,9 +309,14 @@ letsencrypt_restart_services:
   - traefik
 ```
 
+## Discovered Tags
+
+**_letsencrypt_**
+
+
 ## Dependencies
 
-* None
+- None
 
 ## License
 
