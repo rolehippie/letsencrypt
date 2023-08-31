@@ -1,13 +1,13 @@
 # letsencrypt
 
-[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&amp;logoColor=white)](https://github.com/rolehippie/letsencrypt)
+[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/letsencrypt)
 [![General Workflow](https://github.com/rolehippie/letsencrypt/actions/workflows/general.yml/badge.svg)](https://github.com/rolehippie/letsencrypt/actions/workflows/general.yml)
 [![Readme Workflow](https://github.com/rolehippie/letsencrypt/actions/workflows/docs.yml/badge.svg)](https://github.com/rolehippie/letsencrypt/actions/workflows/docs.yml)
 [![Galaxy Workflow](https://github.com/rolehippie/letsencrypt/actions/workflows/galaxy.yml/badge.svg)](https://github.com/rolehippie/letsencrypt/actions/workflows/galaxy.yml)
 [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/letsencrypt)](https://github.com/rolehippie/letsencrypt/blob/master/LICENSE)
 [![Ansible Role](https://img.shields.io/badge/role-rolehippie.letsencrypt-blue)](https://galaxy.ansible.com/rolehippie/letsencrypt)
 
-Ansible role to fetch and publish Let&#39;s Encrypt certificates.
+Ansible role to fetch and publish Let's Encrypt certificates.
 
 ## Sponsor
 
@@ -47,7 +47,6 @@ Building and improving this Ansible role have been sponsored by my current and p
 ## Requirements
 
 - Minimum Ansible version: `2.10`
-
 
 ## Default Variables
 
