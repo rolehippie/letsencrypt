@@ -59,6 +59,7 @@
     data: "{{ letsencrypt_initial_request }}"
   tags:
     - letsencrypt
+    - skip_ansible_later
 
 - name: "Print final response : {{ certificate.name }}"
   when:

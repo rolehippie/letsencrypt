@@ -22,6 +22,7 @@
     state: absent
   tags:
     - letsencrypt
+    - skip_ansible_later
 
 - name: "Create new cert : {{ certificate.name }}"
   when: letsencrypt_ssl_config is changed
@@ -31,5 +32,6 @@
     creates: "/etc/letsencrypt/keys/{{ certificate.name }}.key"
   tags:
     - letsencrypt
+    - skip_ansible_later
 
 ...
