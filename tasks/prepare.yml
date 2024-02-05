@@ -1,4 +1,3 @@
-# Standards: 1.2
 ---
 - name: "Write SSL config : {{ certificate.name }}"
   register: letsencrypt_ssl_config

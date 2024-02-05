@@ -1,4 +1,3 @@
-# Standards: 1.2
 ---
 # @var letsencrypt_cluster_enabled:description: Enable clustered mode
 letsencrypt_cluster_enabled: False

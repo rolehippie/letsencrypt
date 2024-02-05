@@ -1,4 +1,3 @@
-# Standards: 1.2
 ---
 - name: "Create http challenge : {{ certificate.name }}"
   loop: "{{ letsencrypt_initial_request.challenge_data | default({}) | dict2items }}"

@@ -1,4 +1,3 @@
-# Standards: 1.2
 ---
 - name: "Define acme directory : {{ certificate.name }}"
   set_fact:

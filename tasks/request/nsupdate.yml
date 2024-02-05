@@ -1,4 +1,3 @@
-# Standards: 1.2
 ---
 - name: "Create DNS record : {{ certificate.name }}"
   register: letsencrypt_nsupdate_records

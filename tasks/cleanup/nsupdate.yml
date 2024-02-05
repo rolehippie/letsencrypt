@@ -1,4 +1,3 @@
-# Standards: 1.2
 ---
 - name: "Delete DNS record : {{ certificate.name }}"
   loop: "{{ letsencrypt_initial_request.challenge_data_dns | default({}) | dict2items }}"
