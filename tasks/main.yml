@@ -2,7 +2,7 @@
 - name: Install required packages
   loop:
     - python3-dnspython
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   tags:
@@ -13,7 +13,7 @@
   loop_control:
     label: "{{ item.0.name | default(item.0) }}"
   when: letsencrypt_certificates | length > 0 and item.0.state | default('present') == 'present'
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.0.src | default(item.0.name) | default(item.0) }}"
     dest: "{{ item.1.path | default(item.1) }}/{{ item.0.dest | default(item.0.name) | default(item.0) }}"
     owner: "{{ item.1.owner | default(item.0.owner) | default('root') }}"
@@ -27,7 +27,7 @@
   loop_control:
     label: "{{ item.0.name | default(item.0) }}"
   when: letsencrypt_certificates | length > 0 and item.0.state | default('present') == 'absent'
-  file:
+  ansible.builtin.file:
     path: "{{ item.1.path | default(item.1) }}/{{ item.0.dest | default(item.0.name) | default(item.0) }}"
     state: absent
   tags:
@@ -41,7 +41,7 @@
     - certs
     - chains
   when: letsencrypt_certificates | length > 0
-  file:
+  ansible.builtin.file:
     path: "/etc/letsencrypt/{{ item }}"
     owner: root
     group: root
@@ -54,7 +54,7 @@
   when: letsencrypt_certificates | length > 0
   changed_when: False
   no_log: True
-  copy:
+  ansible.builtin.copy:
     src: "{{ letsencrypt_account_key | default('account.key') }}"
     dest: /etc/letsencrypt/account.key
     owner: root
@@ -65,7 +65,7 @@
 
 - name: Create challenge directory
   when: letsencrypt_certificates | length > 0
-  file:
+  ansible.builtin.file:
     path: /var/www/html/.well-known/acme-challenge
     group: root
     state: directory
@@ -82,7 +82,7 @@
   when:
     - letsencrypt_certificates | length > 0
     - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
-  include_tasks: prepare.yml
+  ansible.builtin.include_tasks: prepare.yml
   tags:
     - letsencrypt
 
@@ -92,7 +92,7 @@
     loop_var: certificate
     label: "{{ certificate.name }}"
   when: letsencrypt_certificates | length > 0
-  include_tasks: request.yml
+  ansible.builtin.include_tasks: request.yml
   tags:
     - letsencrypt
 
@@ -100,7 +100,7 @@
   when: letsencrypt_certificates | length > 0
   changed_when: False
   no_log: True
-  file:
+  ansible.builtin.file:
     path: /etc/letsencrypt/account.key
     state: absent
   tags:
@@ -109,7 +109,7 @@
 - name: Reload affected services
   loop: "{{ letsencrypt_reload_services }}"
   when: letsencrypt_certificates | length > 0
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: reloaded
   tags:
@@ -118,7 +118,7 @@
 - name: Restart affected services
   loop: "{{ letsencrypt_restart_services }}"
   when: letsencrypt_certificates | length > 0
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: restarted
   tags:

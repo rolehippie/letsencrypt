@@ -7,7 +7,7 @@
     - letsencrypt_initial_request is changed
     - letsencrypt_initial_request.challenge_data | length > 0
     - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
-  file:
+  ansible.builtin.file:
     path: "/var/www/html/{{ item.value['http-01']['resource'] }}"
     state: absent
   tags:
@@ -20,7 +20,7 @@
   when:
     - letsencrypt_cluster_enabled | bool
     - inventory_hostname != letsencrypt_cluster_nodes[0]
-  file:
+  ansible.builtin.file:
     path: "/var/www/html/{{ item.value['http-01']['resource'] }}"
     state: absent
   tags:
@@ -31,7 +31,7 @@
     - letsencrypt_cluster_enabled | bool
     - inventory_hostname == letsencrypt_cluster_nodes[0]
   connection: local
-  file:
+  ansible.builtin.file:
     path: /tmp/responses.tbz
     state: absent
   tags:
@@ -41,7 +41,7 @@
   when:
     - letsencrypt_cluster_enabled | bool
     - inventory_hostname == letsencrypt_cluster_nodes[0]
-  file:
+  ansible.builtin.file:
     path: /tmp/responses.tbz
     state: absent
   tags:

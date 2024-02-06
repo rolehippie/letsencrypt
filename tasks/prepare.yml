@@ -1,7 +1,7 @@
 ---
 - name: "Write SSL config : {{ certificate.name }}"
   register: letsencrypt_ssl_config
-  template:
+  ansible.builtin.template:
     src: openssl.cnf.j2
     dest: "/etc/letsencrypt/confs/{{ certificate.name }}.cnf"
     owner: root
@@ -16,7 +16,7 @@
     - "/etc/letsencrypt/csrs/{{ certificate.name }}.csr"
     - "/etc/letsencrypt/keys/{{ certificate.name }}.key"
     - "/etc/letsencrypt/certs/{{ certificate.name }}.crt"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   tags:
@@ -25,7 +25,7 @@
 
 - name: "Create new cert : {{ certificate.name }}"
   when: letsencrypt_ssl_config is changed
-  command: "openssl req -out csrs/{{ certificate.name }}.csr -newkey rsa:2048 -nodes -keyout keys/{{ certificate.name }}.key -config confs/{{ certificate.name }}.cnf -batch"
+  ansible.builtin.command: "openssl req -out csrs/{{ certificate.name }}.csr -newkey rsa:2048 -nodes -keyout keys/{{ certificate.name }}.key -config confs/{{ certificate.name }}.cnf -batch"
   args:
     chdir: /etc/letsencrypt
     creates: "/etc/letsencrypt/keys/{{ certificate.name }}.key"
