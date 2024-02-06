@@ -326,7 +326,7 @@ letsencrypt_restart_services:
 
 ## Dependencies
 
-- None
+- [community.crypto](https://github.com/ansible-collections/community.crypto)
 
 ## License
 
