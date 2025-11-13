@@ -95,7 +95,7 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-    remote_src: True
+    remote_src: true
   tags:
     - letsencrypt
 
@@ -106,7 +106,7 @@
   ansible.builtin.fetch:
     dest: "/tmp/{{ certificate.name }}.crt"
     src: "/etc/letsencrypt/chains/{{ certificate.name }}.pem"
-    flat: True
+    flat: true
   tags:
     - letsencrypt
 
@@ -121,7 +121,7 @@
     group: root
     owner: root
     mode: u=rw,g=r,o=r
-    remote_src: False
+    remote_src: false
   tags:
     - letsencrypt
 

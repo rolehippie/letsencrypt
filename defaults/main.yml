@@ -1,6 +1,6 @@
 ---
 # @var letsencrypt_cluster_enabled:description: Enable clustered mode
-letsencrypt_cluster_enabled: False
+letsencrypt_cluster_enabled: false
 
 # @var letsencrypt_cluster_nodes:description: List of nodes part of the cluster
 # @var letsencrypt_cluster_nodes:example: >
@@ -12,10 +12,10 @@ letsencrypt_cluster_enabled: False
 letsencrypt_cluster_nodes: []
 
 # @var letsencrypt_production_armed:description: Enable production authority
-letsencrypt_production_armed: False
+letsencrypt_production_armed: false
 
 # @var letsencrypt_request_output:description: Print cert information after request
-letsencrypt_request_output: True
+letsencrypt_request_output: true
 
 # @var letsencrypt_cert_paths:description: Paths to store the certificates
 # @var letsencrypt_cert_paths:example: >

@@ -29,11 +29,15 @@ galaxy_info:
       versions:
         - focal
         - jammy
+        - noble
   galaxy_tags:
     - certificates
     - tls
     - encryption
 
 dependencies: []
+
+collections:
+  - community.crypto
 
 ...

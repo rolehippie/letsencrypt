@@ -10,7 +10,7 @@
   ansible.builtin.copy:
     content: "{{ item.value['http-01']['resource_value'] }}"
     dest: "/var/www/html/{{ item.value['http-01']['resource'] }}"
-    force: True
+    force: true
   tags:
     - letsencrypt
 
@@ -31,7 +31,7 @@
   ansible.builtin.fetch:
     src: /tmp/responses.tbz
     dest: /tmp/responses.tbz
-    flat: True
+    flat: true
   tags:
     - letsencrypt
 

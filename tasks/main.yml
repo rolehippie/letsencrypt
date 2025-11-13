@@ -52,8 +52,8 @@
 
 - name: Copy letsencrypt account
   when: letsencrypt_certificates | length > 0
-  changed_when: False
-  no_log: True
+  changed_when: false
+  no_log: true
   ansible.builtin.copy:
     src: "{{ letsencrypt_account_key | default('account.key') }}"
     dest: /etc/letsencrypt/account.key
@@ -98,8 +98,8 @@
 
 - name: Remove letsencrypt account
   when: letsencrypt_certificates | length > 0
-  changed_when: False
-  no_log: True
+  changed_when: false
+  no_log: true
   ansible.builtin.file:
     path: /etc/letsencrypt/account.key
     state: absent
