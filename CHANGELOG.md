@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/rolehippie/letsencrypt/compare/v2.0.0...v2.1.0) (2025-11-17)
+
+
+### Features
+
+* apply new repo structure and update linting ([89e8b77](https://github.com/rolehippie/letsencrypt/commit/89e8b770a67da0fd4a410ab7399ae7c5f3547e26))
+
 ## [2.0.0](https://github.com/rolehippie/letsencrypt/compare/v1.0.1...v2.0.0) (2024-02-12)
 
 
