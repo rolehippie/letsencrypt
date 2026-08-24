@@ -12,7 +12,9 @@
   loop: "{{ letsencrypt_extra_certs | product(letsencrypt_cert_paths) | list }}"
   loop_control:
     label: "{{ item.0.name | default(item.0) }}"
-  when: letsencrypt_certificates | length > 0 and item.0.state | default('present') == 'present'
+  when:
+    - letsencrypt_certificates | length > 0
+    - item.0.state is not defined or item.0.state == 'present'
   ansible.builtin.copy:
     src: "{{ item.0.src | default(item.0.name) | default(item.0) }}"
     dest: "{{ item.1.path | default(item.1) }}/{{ item.0.dest | default(item.0.name) | default(item.0) }}"
@@ -26,7 +28,10 @@
   loop: "{{ letsencrypt_extra_certs | product(letsencrypt_cert_paths) | list }}"
   loop_control:
     label: "{{ item.0.name | default(item.0) }}"
-  when: letsencrypt_certificates | length > 0 and item.0.state | default('present') == 'absent'
+  when:
+    - letsencrypt_certificates | length > 0
+    - item.0.state is defined
+    - item.0.state == 'absent'
   ansible.builtin.file:
     path: "{{ item.1.path | default(item.1) }}/{{ item.0.dest | default(item.0.name) | default(item.0) }}"
     state: absent
@@ -40,7 +45,8 @@
     - keys
     - certs
     - chains
-  when: letsencrypt_certificates | length > 0
+  when:
+    - letsencrypt_certificates | length > 0
   ansible.builtin.file:
     path: "/etc/letsencrypt/{{ item }}"
     owner: root
@@ -51,7 +57,8 @@
     - letsencrypt
 
 - name: Copy letsencrypt account
-  when: letsencrypt_certificates | length > 0
+  when:
+    - letsencrypt_certificates | length > 0
   changed_when: false
   no_log: true
   ansible.builtin.copy:
@@ -64,7 +71,8 @@
     - letsencrypt
 
 - name: Create challenge directory
-  when: letsencrypt_certificates | length > 0
+  when:
+    - letsencrypt_certificates | length > 0
   ansible.builtin.file:
     path: /var/www/html/.well-known/acme-challenge
     group: root
@@ -91,13 +99,15 @@
   loop_control:
     loop_var: certificate
     label: "{{ certificate.name }}"
-  when: letsencrypt_certificates | length > 0
+  when:
+    - letsencrypt_certificates | length > 0
   ansible.builtin.include_tasks: request.yml
   tags:
     - letsencrypt
 
 - name: Remove letsencrypt account
-  when: letsencrypt_certificates | length > 0
+  when:
+    - letsencrypt_certificates | length > 0
   changed_when: false
   no_log: true
   ansible.builtin.file:
@@ -108,7 +118,8 @@
 
 - name: Reload affected services
   loop: "{{ letsencrypt_reload_services }}"
-  when: letsencrypt_certificates | length > 0
+  when:
+    - letsencrypt_certificates | length > 0
   ansible.builtin.service:
     name: "{{ item }}"
     state: reloaded
@@ -117,7 +128,8 @@
 
 - name: Restart affected services
   loop: "{{ letsencrypt_restart_services }}"
-  when: letsencrypt_certificates | length > 0
+  when:
+    - letsencrypt_certificates | length > 0
   ansible.builtin.service:
     name: "{{ item }}"
     state: restarted

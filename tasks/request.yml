@@ -58,7 +58,6 @@
     data: "{{ letsencrypt_initial_request }}"
   tags:
     - letsencrypt
-    - skip_ansible_later
 
 - name: "Print final response : {{ certificate.name }}"
   when:
@@ -78,9 +77,12 @@
   when:
     - letsencrypt_final_request is success
     - letsencrypt_cluster_nodes | length == 0 or inventory_hostname == letsencrypt_cluster_nodes[0]
-  ansible.builtin.shell: "cat certs/{{ certificate.name }}.pem keys/{{ certificate.name }}.key > chains/{{ certificate.name }}.pem"
-  args:
-    chdir: /etc/letsencrypt
+  ansible.builtin.copy:
+    dest: "/etc/letsencrypt/chains/{{ certificate.name }}.pem"
+    content: "{{ lookup('file', '/etc/letsencrypt/certs/' + certificate.name + '.pem') }}\n{{ lookup('file', '/etc/letsencrypt/keys/' + certificate.name + '.key') }}\n"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - letsencrypt
 

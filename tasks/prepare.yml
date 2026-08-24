@@ -10,8 +10,9 @@
   tags:
     - letsencrypt
 
-- name: "Remove old cert : {{ certificate.name }}"
-  when: letsencrypt_ssl_config is changed
+- name: "Remove old cert : {{ certificate.name }}" # noqa: no-handler
+  when:
+    - letsencrypt_ssl_config is changed
   loop:
     - "/etc/letsencrypt/csrs/{{ certificate.name }}.csr"
     - "/etc/letsencrypt/keys/{{ certificate.name }}.key"
@@ -21,16 +22,15 @@
     state: absent
   tags:
     - letsencrypt
-    - skip_ansible_later
 
-- name: "Create new cert : {{ certificate.name }}"
-  when: letsencrypt_ssl_config is changed
+- name: "Create new cert : {{ certificate.name }}" # noqa: no-handler
+  when:
+    - letsencrypt_ssl_config is changed
   ansible.builtin.command: "openssl req -out csrs/{{ certificate.name }}.csr -newkey rsa:2048 -nodes -keyout keys/{{ certificate.name }}.key -config confs/{{ certificate.name }}.cnf -batch"
   args:
     chdir: /etc/letsencrypt
     creates: "/etc/letsencrypt/keys/{{ certificate.name }}.key"
   tags:
     - letsencrypt
-    - skip_ansible_later
 
 ...

@@ -11,6 +11,7 @@
     content: "{{ item.value['http-01']['resource_value'] }}"
     dest: "/var/www/html/{{ item.value['http-01']['resource'] }}"
     force: true
+    mode: u=rw,g=rw,o=r
   tags:
     - letsencrypt
 
@@ -18,9 +19,10 @@
   when:
     - letsencrypt_cluster_enabled | bool
     - inventory_hostname == letsencrypt_cluster_nodes[0]
-  archive:
+  community.general.archive:
     path: /var/www/html/
     dest: /tmp/responses.tbz
+    mode: u=rw,g=rw,o=r
   tags:
     - letsencrypt
 
@@ -42,6 +44,7 @@
   ansible.builtin.copy:
     src: /tmp/responses.tbz
     dest: /tmp/responses.tbz
+    mode: u=rw,g=rw,o=r
   tags:
     - letsencrypt
 
