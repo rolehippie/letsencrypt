@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.3.0](https://github.com/rolehippie/letsencrypt/compare/v2.2.0...v2.3.0) (2026-08-31)
+
+### Features
+
+* properly integrate fqcn and linting ([b814fea](https://github.com/rolehippie/letsencrypt/commit/b814fea44a7588a80024e99431a10b5ab2f0d7a7))
+
+### Dependencies
+
+* **minor:** update dependency pipx:ansible-doctor to v8.4.0 ([45428c3](https://github.com/rolehippie/letsencrypt/commit/45428c3c3b2d43a60e66f46b83d3ff50aefe89da))
+* **minor:** update dependency pipx:ansible-lint to v26.8.0 ([#46](https://github.com/rolehippie/letsencrypt/issues/46)) ([8d0ad2a](https://github.com/rolehippie/letsencrypt/commit/8d0ad2a0698ec79cfc7b3ec54cac3f947ccd7fea))
+* **minor:** update dependency pipx:molecule to v26.8.0 ([#47](https://github.com/rolehippie/letsencrypt/issues/47)) ([76f736f](https://github.com/rolehippie/letsencrypt/commit/76f736fbff13e1640edc8f1447ccdc65aec3bdf1))
+* **patch:** update dependency pipx:ansible-core to v2.21.3 ([#44](https://github.com/rolehippie/letsencrypt/issues/44)) ([25538d7](https://github.com/rolehippie/letsencrypt/commit/25538d7b307f5c6532a619ebd500cb230bb6d937))
+* **patch:** update dependency pipx:ansible-doctor to v8.4.1 ([#48](https://github.com/rolehippie/letsencrypt/issues/48)) ([dd065c7](https://github.com/rolehippie/letsencrypt/commit/dd065c78fb3958ccea3a254155a7b5055a969be3))
+* **patch:** update dependency pre-commit to v4.6.2 ([#45](https://github.com/rolehippie/letsencrypt/issues/45)) ([cfeb1c1](https://github.com/rolehippie/letsencrypt/commit/cfeb1c19e61d27a760412ce0d4e287cbdb8babdc))
+* **patch:** update dependency python to v3.14.7 ([319f57b](https://github.com/rolehippie/letsencrypt/commit/319f57b914c90e3ae8b9f7bcf47c50689b45a21f))
+
 ## [2.2.0](https://github.com/rolehippie/letsencrypt/compare/v2.1.0...v2.2.0) (2026-07-27)
 
 ## [2.1.0](https://github.com/rolehippie/letsencrypt/compare/v2.0.0...v2.1.0) (2025-11-17)
