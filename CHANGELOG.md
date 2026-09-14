@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.0](https://github.com/rolehippie/letsencrypt/compare/v2.3.0...v2.4.0) (2026-09-14)
+
+### Dependencies
+
+* **minor:** update dependency community.general to >=13.4.0,<13.5.0 ([#49](https://github.com/rolehippie/letsencrypt/issues/49)) ([84d9b52](https://github.com/rolehippie/letsencrypt/commit/84d9b52704152968a65d0c564b9276351a51dd53))
+* **mise:** update dependency pipx:ansible-core to v2.21.4 ([#50](https://github.com/rolehippie/letsencrypt/issues/50)) ([2e57545](https://github.com/rolehippie/letsencrypt/commit/2e575455927bf3f0beeb93268eb267d85c9d2b24))
+* **mise:** update dependency prek to v0.5.3 ([#51](https://github.com/rolehippie/letsencrypt/issues/51)) ([8205669](https://github.com/rolehippie/letsencrypt/commit/8205669d9455b5d483ed5ca2b772e7c96547bd07))
+
 ## [2.3.0](https://github.com/rolehippie/letsencrypt/compare/v2.2.0...v2.3.0) (2026-08-31)
 
 ### Features
