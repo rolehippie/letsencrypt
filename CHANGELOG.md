@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.0](https://github.com/rolehippie/letsencrypt/compare/v2.5.0...v3.0.0) (2026-11-09)
+
+### Dependencies
+
+* **major:** update dependency community.general to v14 ([#69](https://github.com/rolehippie/letsencrypt/issues/69)) ([9fbc009](https://github.com/rolehippie/letsencrypt/commit/9fbc0091d7960574d0073c0ede4394bc45f324d5))
+* **mise:** update dependency pipx:ansible-core to v2.22.0 ([#68](https://github.com/rolehippie/letsencrypt/issues/68)) ([8e70ee3](https://github.com/rolehippie/letsencrypt/commit/8e70ee34201b7d74cdb41193d9e9e7e6cb79aeb4))
+* **mise:** update dependency pipx:ansible-doctor to v8.4.4 ([#73](https://github.com/rolehippie/letsencrypt/issues/73)) ([699e2c9](https://github.com/rolehippie/letsencrypt/commit/699e2c9f898ee0084f2186bf5601aee02ac0c7ae))
+* **mise:** update dependency pipx:ansible-lint to v26.10.1 ([#63](https://github.com/rolehippie/letsencrypt/issues/63)) ([b715e3c](https://github.com/rolehippie/letsencrypt/commit/b715e3ce16d56ed2411a94debbe912c9802d5392))
+* **mise:** update dependency pipx:ansible-lint to v26.11.0 ([#71](https://github.com/rolehippie/letsencrypt/issues/71)) ([8380b0a](https://github.com/rolehippie/letsencrypt/commit/8380b0abf19bbba402fa180347660d7f84fbd72b))
+* **mise:** update dependency pipx:molecule to v26.11.0 ([#72](https://github.com/rolehippie/letsencrypt/issues/72)) ([922038f](https://github.com/rolehippie/letsencrypt/commit/922038f600da44a63d285b07d263759783873d2a))
+* **mise:** update dependency prek to v0.5.10 ([#70](https://github.com/rolehippie/letsencrypt/issues/70)) ([c4a6492](https://github.com/rolehippie/letsencrypt/commit/c4a6492bf3c3a8c6cf73958358f65044fa22ed49))
+* **mise:** update dependency prek to v0.5.6 ([#64](https://github.com/rolehippie/letsencrypt/issues/64)) ([b1c2ece](https://github.com/rolehippie/letsencrypt/commit/b1c2ecefb38950ba89bd908cbad3bf3135eb7d39))
+* **mise:** update dependency prek to v0.5.7 ([#65](https://github.com/rolehippie/letsencrypt/issues/65)) ([9920fcf](https://github.com/rolehippie/letsencrypt/commit/9920fcfc5e41e638875d32c2241b047ce42b4028))
+* **mise:** update dependency prek to v0.5.9 ([#67](https://github.com/rolehippie/letsencrypt/issues/67)) ([35d90d1](https://github.com/rolehippie/letsencrypt/commit/35d90d1d7338a5772c3b745e3c1e083ea6af916c))
+* **mise:** update node.js to v26 ([#66](https://github.com/rolehippie/letsencrypt/issues/66)) ([1fc3fdf](https://github.com/rolehippie/letsencrypt/commit/1fc3fdf188d662ad3cc304e6c61af6e5b1758a71))
+
 ## [2.5.0](https://github.com/rolehippie/letsencrypt/compare/v2.4.0...v2.5.0) (2026-10-12)
 
 ### Dependencies
